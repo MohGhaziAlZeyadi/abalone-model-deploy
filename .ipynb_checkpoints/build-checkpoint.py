@@ -99,6 +99,8 @@ def get_pipeline_custom_tags(args, sm_client, new_tags):
         logger.error("Error getting project tags")
     return new_tags
 
+
+
 def get_cfn_style_config(stage_config):
     parameters = []
     for key, value in stage_config["Parameters"].items():
