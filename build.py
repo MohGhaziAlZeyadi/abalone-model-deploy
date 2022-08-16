@@ -125,8 +125,12 @@ def create_cfn_params_tags_file(config, export_params_file, export_tags_file):
         json.dump(parameters, f, indent=4)
     with open(export_tags_file, "w") as f:
         json.dump(tags, f, indent=4)
+        
 
 if __name__ == "__main__":
+    
+    print("I am test.py start running ")
+    
     parser = argparse.ArgumentParser()
     parser.add_argument("--log-level", type=str, default=os.environ.get("LOGLEVEL", "INFO").upper())
     parser.add_argument("--model-execution-role", type=str, required=True)
@@ -145,6 +149,8 @@ if __name__ == "__main__":
     parser.add_argument("--export-prod-tags", type=str, default="prod-tags-export.json")
     parser.add_argument("--export-cfn-params-tags", type=bool, default=False)
     args, _ = parser.parse_known_args()
+    
+    print("I am test.py finshed argparse.ArgumentParser()  ")
 
     # Configure logging to output the line number and message
     log_format = "%(levelname)s: [%(filename)s:%(lineno)s] %(message)s"
@@ -152,15 +158,20 @@ if __name__ == "__main__":
 
     # Get the latest approved package
     model_package_arn = get_approved_package(args.model_package_group_name)
+    
+    print("I am test.py finshed model_package_arn")
 
     # Write the staging config
     with open(args.import_staging_config, "r") as f:
         staging_config = extend_config(args, model_package_arn, json.load(f))
     logger.debug("Staging config: {}".format(json.dumps(staging_config, indent=4)))
+    print("I am test.py finshed Staging config 1 ")
+    
     with open(args.export_staging_config, "w") as f:
         json.dump(staging_config, f, indent=4)
     if (args.export_cfn_params_tags):
       create_cfn_params_tags_file(staging_config, args.export_staging_params, args.export_staging_tags)
+    print("I am test.py finshed Staging config 2 ")
 
     # Write the prod config for code pipeline
     with open(args.import_prod_config, "r") as f:
@@ -170,3 +181,4 @@ if __name__ == "__main__":
         json.dump(prod_config, f, indent=4)
     if (args.export_cfn_params_tags):
       create_cfn_params_tags_file(prod_config, args.export_prod_params, args.export_prod_tags)
+     print("I am test.py finshed prod config")
