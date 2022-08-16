@@ -181,4 +181,4 @@ if __name__ == "__main__":
         json.dump(prod_config, f, indent=4)
     if (args.export_cfn_params_tags):
       create_cfn_params_tags_file(prod_config, args.export_prod_params, args.export_prod_tags)
-     print("I am test.py finshed prod config")
+    print("I am test.py finshed prod config")
