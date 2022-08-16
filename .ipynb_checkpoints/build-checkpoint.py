@@ -90,9 +90,11 @@ def extend_config(args, model_package_arn, stage_config):
 
 def get_pipeline_custom_tags(args, sm_client, new_tags):
     try:
-        response = sm_client.list_tags(
-                ResourceArn=args.sagemaker_project_arn)
+        response = sm_client.list_tags(ResourceArn=args.sagemaker_project_arn)
         project_tags = response["Tags"]
+        print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& project_tags &&&&&&&&&&&&&&&&&&&&&&&&&&&")
+        print(project_tags)
+        print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& project_tags &&&&&&&&&&&&&&&&&&&&&&&&&&&")
         for project_tag in project_tags:
             new_tags[project_tag["Key"]] = project_tag["Value"]
     except:
