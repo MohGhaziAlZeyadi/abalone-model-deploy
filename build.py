@@ -81,6 +81,10 @@ def extend_config(args, model_package_arn, stage_config):
         "sagemaker:project-name": args.sagemaker_project_name,
     }
     # Add tags from Project
+    print("***args*** : ", args)
+    print("***sm_client*** : ", sm_client)
+    print("***new_tags*** : ", new_tags)
+    
     get_pipeline_custom_tags(args, sm_client, new_tags)
 
     return {
@@ -92,9 +96,6 @@ def get_pipeline_custom_tags(args, sm_client, new_tags):
     try:
         response = sm_client.list_tags(ResourceArn=args.sagemaker_project_arn)
         project_tags = response["Tags"]
-        print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& project_tags &&&&&&&&&&&&&&&&&&&&&&&&&&&")
-        print(project_tags)
-        print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& project_tags &&&&&&&&&&&&&&&&&&&&&&&&&&&")
         for project_tag in project_tags:
             new_tags[project_tag["Key"]] = project_tag["Value"]
     except:
