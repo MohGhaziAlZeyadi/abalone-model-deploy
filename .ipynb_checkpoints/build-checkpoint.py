@@ -92,14 +92,22 @@ def extend_config(args, model_package_arn, stage_config):
         "Tags": {**stage_config.get("Tags", {}), **new_tags},
     }
 
+# def get_pipeline_custom_tags(args, sm_client, new_tags):
+#     try:
+#         response = sm_client.list_tags(ResourceArn=args.sagemaker_project_arn)
+#         project_tags = response["Tags"]
+#         for project_tag in project_tags:
+#             new_tags[project_tag["Key"]] = project_tag["Value"]
+#     except:
+#         logger.error("Error getting project tags")
+#     return new_tags
+
 def get_pipeline_custom_tags(args, sm_client, new_tags):
-    try:
-        response = sm_client.list_tags(ResourceArn=args.sagemaker_project_arn)
-        project_tags = response["Tags"]
-        for project_tag in project_tags:
-            new_tags[project_tag["Key"]] = project_tag["Value"]
-    except:
-        logger.error("Error getting project tags")
+    response = sm_client.list_tags(ResourceArn=args.sagemaker_project_arn)
+    project_tags = response["Tags"]
+    for project_tag in project_tags:
+        new_tags[project_tag["Key"]] = project_tag["Value"]
+  
     return new_tags
 
 
