@@ -75,11 +75,14 @@ def extend_config(args, model_package_arn, stage_config):
         "ModelExecutionRoleArn": args.model_execution_role,
         "DataCaptureUploadPath": "s3://" + args.s3_bucket + '/datacapture-' + stage_config["Parameters"]["StageName"],
     }
+    
+    print("new_params = ", new_params)
     new_tags = {
         "sagemaker:deployment-stage": stage_config["Parameters"]["StageName"],
         "sagemaker:project-id": args.sagemaker_project_id,
         "sagemaker:project-name": args.sagemaker_project_name,
     }
+    print("new_tags = ", new_tags)
     # Add tags from Project
     get_pipeline_custom_tags(args, sm_client, new_tags)
 
